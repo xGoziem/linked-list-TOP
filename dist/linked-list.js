@@ -96,21 +96,78 @@ class LinkedList {
             if (currentNode.value === value) {
                 isValue = true;
             }
-            if (!currentNode.nextNode.nextNode) {
-                if (currentNode.nextNode.value === value) {
-                    isValue = true;
-                }
+            if (!currentNode.nextNode.nextNode && currentNode.nextNode.value === value) {
+                isValue = true;
             }
             currentNode = currentNode.nextNode;
         }
         return isValue;
     }
+    find(value) {
+        if (!this.headNode) {
+            return null;
+        }
+        else if (this.headNode.value === value) {
+            return 0;
+        }
+        let currentNode = this.headNode;
+        let currentNodeIndex = 0;
+        while (currentNode.nextNode) {
+            if (currentNode.value === value)
+                break;
+            if (!currentNode.nextNode.nextNode && currentNode.nextNode.value === value) {
+                currentNodeIndex += 1;
+                break;
+            }
+            currentNodeIndex += 1;
+            currentNode = currentNode.nextNode;
+        }
+        return currentNodeIndex;
+    }
+    toString() {
+        if (!this.headNode) {
+            return 'null';
+        }
+        else if (!this.headNode.nextNode) {
+            return `( ${this.headNode.value} ) -> null`;
+        }
+        let currentNode = this.headNode;
+        let listString = '';
+        while (currentNode.nextNode) {
+            listString += `( ${currentNode.value} ) -> `;
+            if (!currentNode.nextNode.nextNode) {
+                listString += `( ${currentNode.nextNode.value} ) -> null`;
+            }
+            currentNode = currentNode.nextNode;
+        }
+        return listString;
+    }
+    insertAt(value, index) {
+        if (index === 0) {
+            this.prepend(value);
+        }
+        else if (index > 0 || index < 0) {
+            const newNode = new node_1.default(value);
+            const currentNode = this.at(index);
+            const prevNode = this.at(index - 1);
+            newNode.nextNode = currentNode;
+            if (prevNode) {
+                prevNode.nextNode = newNode;
+            }
+        }
+    }
+    removeAt(index) {
+        if (index === 0) {
+            const secondNode = this.at(index + 1);
+            this.headNode = secondNode;
+        }
+        else if (index > 0 || index < 0) {
+            const prevNode = this.at(index - 1);
+            const nextNode = this.at(index + 1);
+            if (prevNode) {
+                prevNode.nextNode = nextNode;
+            }
+        }
+    }
 }
 exports.default = LinkedList;
-const myList = new LinkedList();
-const emptyList = new LinkedList();
-myList.append('first');
-myList.append('second');
-myList.append('third');
-myList.append('fourth');
-console.log(myList);
