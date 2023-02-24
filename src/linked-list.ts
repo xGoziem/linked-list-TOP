@@ -47,9 +47,7 @@ export default class LinkedList {
   }
 
   tail(): Node | null {
-    if (!this.headNode) {
-      return null;
-    }
+    if (!this.headNode) return null;
 
     let tailNode = this.headNode;
 

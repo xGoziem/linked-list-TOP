@@ -46,9 +46,8 @@ class LinkedList {
         return this.headNode;
     }
     tail() {
-        if (!this.headNode) {
+        if (!this.headNode)
             return null;
-        }
         let tailNode = this.headNode;
         while (tailNode.nextNode) {
             tailNode = tailNode.nextNode;
